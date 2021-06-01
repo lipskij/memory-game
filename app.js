@@ -5,8 +5,6 @@ let openModal = document.querySelector(".openModal");
 
 let array = [...boxes];
 
-//start
-
 let seconds = 0;
 let min = 0;
 let timer;
@@ -106,6 +104,7 @@ function showModal() {
   document.body.append(modal);
 }
 
+// check matched
 function allMach() {
   setTimeout(() => {
     let maching = array.every((i) => i.className === "box flip match");
