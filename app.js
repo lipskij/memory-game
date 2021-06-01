@@ -1,6 +1,7 @@
 const boxes = document.querySelectorAll(".box");
 const reset = document.querySelector(".reset");
 const start = document.querySelector(".start");
+let openModal = document.querySelector(".openModal");
 
 let array = [...boxes];
 
@@ -10,18 +11,22 @@ let seconds = 0;
 let min = 0;
 let timer;
 
+let myTime = setInterval(() => {
+  seconds++;
+
+  if (seconds == 60) {
+    min++;
+    seconds = 0;
+  }
+
+  timer = document.querySelector(".time").innerHTML =
+    "Timer: " + min + "mins " + seconds + "s";
+}, 1000);
+
+let showing = false;
+
 function startGame() {
-  setInterval(function incrementTimer() {
-    seconds++;
-
-    if (seconds == 60) {
-      min++;
-      seconds = 0;
-    }
-
-    timer = document.querySelector(".time").innerHTML =
-      "Timer: " + min + "mins " + seconds + "s";
-  }, 1000);
+  myTime;
 }
 
 let hasFlippedBox = false;
@@ -84,12 +89,27 @@ function resetBoard() {
   [firstBox, secondBox] = [null, null];
 }
 
+// show modal
+function showModal() {
+  showing = true;
+
+  clearInterval(myTime);
+  let modal = document.querySelector(".modal");
+  modal.style.display = "flex";
+
+  modal.append(openModal);
+
+  text = "YOU WON! Your time: " + min + "mins " + seconds + "s";
+  openModal.append(text);
+
+  modal.style.display = "flex";
+  document.body.append(modal);
+}
+
 function allMach() {
   setTimeout(() => {
     let maching = array.every((i) => i.className === "box flip match");
-    maching
-      ? alert("Congratulations! You won in " + min + "min " + seconds + "s")
-      : null;
+    maching ? showModal() : null;
   }, 300);
 }
 
@@ -101,6 +121,5 @@ boxes.forEach((box) => {
 reset.addEventListener("click", resetGame);
 
 function resetGame() {
-  clearInterval(incrementTimer);
   window.location.reload();
 }
