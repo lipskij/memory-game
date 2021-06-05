@@ -1,32 +1,15 @@
 const boxes = document.querySelectorAll(".box");
 const reset = document.querySelector(".reset");
 const start = document.querySelector(".start");
-let openModal = document.querySelector(".openModal");
+const openModal = document.querySelector(".openModal");
 
 let array = [...boxes];
-
+// timer
 let seconds = 0;
 let min = 0;
 let timer;
 
-let myTime = setInterval(() => {
-  seconds++;
-
-  if (seconds == 60) {
-    min++;
-    seconds = 0;
-  }
-
-  timer = document.querySelector(".time").innerHTML =
-    "Timer: " + min + "mins " + seconds + "s";
-}, 1000);
-
 let showing = false;
-
-function startGame() {
-  myTime;
-}
-
 let hasFlippedBox = false;
 let disableBoard = false;
 let firstBox, secondBox;
@@ -54,6 +37,22 @@ function flipBox() {
   startGame();
   checkMatch();
   allMach();
+}
+
+let myTime = setInterval(() => {
+  seconds++;
+
+  if (seconds == 60) {
+    min++;
+    seconds = 0;
+  }
+
+  timer = document.querySelector(".time").innerHTML =
+    "Timer: " + min + "mins " + seconds + "s";
+}, 1000);
+
+function startGame() {
+  myTime;
 }
 
 function checkMatch() {
@@ -87,12 +86,20 @@ function resetBoard() {
   [firstBox, secondBox] = [null, null];
 }
 
+// shuffle cards
+(function shuffle() {
+  boxes.forEach((box) => {
+    let randomPos = Math.floor(Math.random() * 8);
+    box.style.order = randomPos;
+  });
+})();
+
 // show modal
 function showModal() {
   showing = true;
 
   clearInterval(myTime);
-  let modal = document.querySelector(".modal");
+  const modal = document.querySelector(".modal");
   modal.style.display = "flex";
 
   modal.append(openModal);
@@ -112,13 +119,13 @@ function allMach() {
   }, 300);
 }
 
-boxes.forEach((box) => {
-  box.addEventListener("click", flipBox);
-});
-
 // reset button
 reset.addEventListener("click", resetGame);
 
 function resetGame() {
   window.location.reload();
 }
+
+boxes.forEach((box) => {
+  box.addEventListener("click", flipBox);
+});
