@@ -1,13 +1,10 @@
 const boxes = document.querySelectorAll(".box");
 const reset = document.querySelector(".reset");
 const timer = document.querySelector(".time");
-const openModal = document.querySelector(".openModal");
 const start = document.querySelector(".start");
 
 // start timer button
 start.addEventListener("click", startTimer);
-
-console.log(start.disabled);
 
 let array = [...boxes];
 
@@ -19,8 +16,9 @@ let showingModal = false;
 let hasFlippedBox = false;
 let disableBoard = false;
 let firstBox, secondBox;
+let count = 0;
 
-function flipBox() {
+function flipBox(event) {
   if (seconds == 0) {
     return;
   }
@@ -44,6 +42,7 @@ function flipBox() {
   secondBox = this;
   disableBoard = true;
 
+  counter(event);
   checkMatch();
   allMach();
 }
@@ -65,13 +64,18 @@ function startTimer() {
     timer.innerHTML = "Timer: " + min + "mins " + seconds + "s";
 
     if (showingModal) {
-      timer.innerHTML = "Timer: 0mins 0s"
+      timer.innerHTML = "Timer: 0mins 0s";
     }
   }, 1000);
 }
 
+// count tries
+function counter(event) {
+  if (event.type == "click") count++, console.log(count);
+}
+
 function checkMatch() {
-  let maching = firstBox.dataset.framework === secondBox.dataset.framework;
+  const maching = firstBox.dataset.framework === secondBox.dataset.framework;
   maching ? disableBox() : unflipBox();
 }
 
@@ -118,12 +122,27 @@ function showModal() {
   const modal = document.querySelector(".modal");
   modal.style.display = "flex";
 
-  modal.append(openModal);
+  let totTime = document.querySelector(".timer");
+  let tries = document.querySelector(".count");
+  let score = document.querySelector(".score");
 
-  text = "YOU WON! Your time: " + min + "mins " + seconds + "s";
-  openModal.append(text);
+  totTime.innerHTML = "Your time: " + min + "mins " + seconds + "s";
+  tries.innerHTML = "Tries: " + count;
 
-  modal.style.display = "flex";
+  if (count > 20) {
+    score.innerHTML = "Score: ⭐️";
+  }
+  if (count > 10) {
+    score.innerHTML = "Score: ⭐️⭐️";
+  }
+  if (count < 10) {
+    score.innerHTML = "Score: ⭐️⭐️⭐️";
+  }
+
+  document.querySelector(".openModal").append(totTime);
+  document.querySelector(".openModal").append(tries);
+  document.querySelector(".openModal").append(score);
+
   document.body.append(modal);
 }
 

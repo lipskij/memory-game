@@ -119,18 +119,29 @@ button:hover {
 
 .openModal {
   position: absolute;
-  left: 36%;
-  top: 25%;
+  left: 33%;
+  top: 15%;
   background: #fefefe;
-  width: 300px;
-  height: 200px;
+  width: 500px;
+  height: 400px;
   text-align: center;
   font-size: 2rem;
   border-radius: 5px;
+  flex-direction: column;
+}
+
+.openModal li {
+  list-style: none;
+  line-height: 2;
+}
+
+.openModal h2 {
+  margin-top: 1rem;
 }
 
 .openModal button {
   position: relative;
-  left: 36%;
+  left: 43%;
   top: 70%;
+  margin: 0;
 }
