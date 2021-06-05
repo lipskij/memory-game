@@ -1,20 +1,30 @@
 const boxes = document.querySelectorAll(".box");
 const reset = document.querySelector(".reset");
-const start = document.querySelector(".start");
+const timer = document.querySelector(".time");
 const openModal = document.querySelector(".openModal");
+const start = document.querySelector(".start");
+
+// start timer button
+start.addEventListener("click", startTimer);
+
+console.log(start.disabled);
 
 let array = [...boxes];
+
 // timer
 let seconds = 0;
 let min = 0;
-let timer;
 
-let showing = false;
+let showingModal = false;
 let hasFlippedBox = false;
 let disableBoard = false;
 let firstBox, secondBox;
 
 function flipBox() {
+  if (seconds == 0) {
+    return;
+  }
+
   if (disableBoard) {
     return;
   }
@@ -34,25 +44,26 @@ function flipBox() {
   secondBox = this;
   disableBoard = true;
 
-  startGame();
   checkMatch();
   allMach();
 }
 
-let myTime = setInterval(() => {
-  seconds++;
+function startTimer() {
+  setInterval(function () {
+    seconds++;
 
-  if (seconds == 60) {
-    min++;
-    seconds = 0;
-  }
+    if (seconds > 0) {
+      start.disabled = true;
+      start.disabled ? (start.style.background = "lightgrey") : "";
+    }
 
-  timer = document.querySelector(".time").innerHTML =
-    "Timer: " + min + "mins " + seconds + "s";
-}, 1000);
+    if (seconds == 60) {
+      min++;
+      seconds = 0;
+    }
 
-function startGame() {
-  myTime;
+    timer.innerHTML = "Timer: " + min + "mins " + seconds + "s";
+  }, 1000);
 }
 
 function checkMatch() {
@@ -96,9 +107,10 @@ function resetBoard() {
 
 // show modal
 function showModal() {
-  showing = true;
+  showingModal = true;
+  document.querySelector(".reset2").addEventListener("click", resetGame);
 
-  clearInterval(myTime);
+  clearInterval();
   const modal = document.querySelector(".modal");
   modal.style.display = "flex";
 
