@@ -63,6 +63,10 @@ function startTimer() {
     }
 
     timer.innerHTML = "Timer: " + min + "mins " + seconds + "s";
+
+    if (showingModal) {
+      timer.innerHTML = "Timer: 0mins 0s"
+    }
   }, 1000);
 }
 

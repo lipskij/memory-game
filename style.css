@@ -13,6 +13,7 @@ body {
 
 main {
   text-align: center;
+  z-index: 0;
 }
 
 h1 {
@@ -26,11 +27,11 @@ h1 {
   flex-wrap: wrap;
   margin: auto;
   perspective: 1000px;
-  z-index: 1;
 }
 
 .buttons {
   display: flex;
+  z-index: 1;
 }
 
 .box {
@@ -85,7 +86,7 @@ button {
   justify-content: center;
   padding: 0.5rem;
   margin: 0.2rem;
-  font-weight: 900;
+  font-weight: 500;
   z-index: 2;
   width: 5rem;
   height: 2.5rem;
@@ -93,9 +94,8 @@ button {
   border: thin solid blue;
   border-radius: 5px;
   box-shadow: 5px 3px 10px rgba(0, 0, 0, 0.3);
-  color:rgb(24, 39, 66);
+  color: rgb(24, 39, 66);
   transition-duration: 0.3s;
-  z-index: 1;
 }
 
 button:hover {
@@ -128,7 +128,6 @@ button:hover {
   font-size: 2rem;
   border-radius: 5px;
 }
-
 
 .openModal button {
   position: relative;
